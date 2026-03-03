@@ -1,3 +1,5 @@
+
+#Ejercicio Versión 1
 class Paciente:
     def __init__(self):
         self.__nombre = ""
@@ -94,7 +96,74 @@ while True:
     else:
         print("Opcion invalida")
 
+#Ejercicio Versión 2
+class Sistema:
+    def __init__(self):
+        self.__lista_pacientes = []
+
+    def ingresarPaciente(self, pac):
+        self.__lista_pacientes.append(pac)
+
+    def verDatosPaciente(self, c):
+        # voy a buscar paciente por paciente
+        for p in self.__lista_pacientes:
+            # por cada paciente de la lista, le digo al paciente que me
+            # retorne la cedula y la comparo con la ingresada por teclado
+            if c == p.verCedula():
+                return p  # si encuentro el paciente lo retorno
+
+    def verNumeroPacientes(self):
+        print("En el sistema hay: " + str(len(self.__lista_pacientes)) + " pacientes")
 
 
+def main():
+    sis = Sistema()
+    # probemos lo que llevamos programado
+    while True:
+        # TAREA HACER EL MENU
+        opcion = int(input("Ingrese 0 para salir, 1 para ingresar nuevo paciente, 2 ver Paciente: "))
+
+        if opcion == 1:
+            # ingreso pacientes
+            print("A continuacion se solicitaran los datos ...")
+            # 1. Se solicitan los datos
+            nombre = input("Ingrese el nombre: ")
+            cedula = int(input("Ingrese la cedula: "))
+            genero = input("Ingrese el genero: ")
+            servicio = input("Ingrese el servicio: ")
+
+            # 2. se crea un objeto Paciente
+            pac = Paciente()
+
+            # como el paciente esta vacio debo ingresarle la informacion
+            pac.asignarCedula(cedula)
+            pac.asignarGenero(genero)
+            pac.asignarNombre(nombre)
+            pac.asignarServicio(servicio)
+
+            # 3. se almacena en la lista que esta dentro de la clase sistema
+            sis.ingresarPaciente(pac)
+
+        elif opcion == 2:
+            # 1. solicito la cedula que quiero buscar
+            c = int(input("Ingrese la cedula a buscar: "))
+
+            # le pido al sistema que me devuelva en la variable p al paciente que tenga
+            # la cedula c en la lista
+            p = sis.verDatosPaciente(c)
+
+            # 2. si encuentro al paciente imprimo los datos
+            print("Nombre: " + p.verNombre())
+            print("Cedula: " + str(p.verCedula()))
+            print("Genero: " + p.verGenero())
+            print("Servicio: " + p.verServicio())
+
+        elif opcion != 0:
+            continue
+        else:
+            break
 
 
+# aca el python descubre cual es la funcion principal
+if __name__ == "__main__":
+    main()
